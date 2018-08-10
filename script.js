@@ -1,22 +1,27 @@
 document.getElementById("findButton").onclick = function() {
 
     let typedText = document.getElementById("input").value;
-        typedText = alphabetize(typedText)
-    let anagrams = [];
+    let main = document.getElementById("main")
+        
+        let anagrams = {};
 
-    for(let x = 0; x < words.length; x++) {
+    for(let x = 0; x <= words.length; x++) {
         let currentWord = words[x];
+        let total = alphabetize(currentWord)
 
-        if (typedText == alphabetize(currentWord)) {
-            anagrams.push(currentWord)
+        if (total in anagrams) {
+            anagrams[total].push(currentWord);
+        } else { 
+            anagrams[total] = [currentWord];
         }
-    }
 
-    for(let word in anagrams) {
-        let span = document.createElement("span");
-        let textContent = document.createTextNode(anagrams[word] + ", ");
-        span.appendChild(textContent);
-        document.getElementById("wordDiv").appendChild(span)
+        if (anagrams[total].length > 4) {
+            let newDiv = document.createElement("div");
+            let result = document.createTextNode(anagrams[total] + ", ");
+            main.appendChild(newDiv);
+            newDiv.appendChild(result);
+
+        }
     }
 }
  function alphabetize(a) {
